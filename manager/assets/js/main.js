@@ -8,7 +8,7 @@
     $
       .ajax({
         // Your server script to process the upload
-        url: '/manager/index.php?action=add',
+        url: '/manager/index.php?action=add&gallery='+GALLERY_ID,
         type: 'POST',
 
         // Form data
@@ -52,7 +52,7 @@
 
   function loadTableData() {
     $
-      .get('/manager/index.php?action=list')
+      .get('/manager/index.php?action=list&gallery='+GALLERY_ID)
       .then(function (res) {
         if(res.success){
           renderTable(res.data);
@@ -78,7 +78,7 @@
       var input = this;
       data[input.name] = input.value;
     });
-    $.post('/manager/index.php?action=save',data)
+    $.post('/manager/index.php?action=save&gallery='+GALLERY_ID,data)
       .then(function (res) {
         if(res.success){
           $row.find('.save-image').attr('disabled','disabled');
@@ -94,7 +94,7 @@
   function removeImage(e) {
     e.preventDefault();
     var $row = $(e.currentTarget).closest('tr');
-    $.post('/manager/index.php?action=delete',{id: $row.data('id')})
+    $.post('/manager/index.php?action=delete&gallery='+GALLERY_ID,{id: $row.data('id')})
       .then(function (res) {
         if(res.success){
           $row.fadeOut(300,function () {

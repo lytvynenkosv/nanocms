@@ -1,8 +1,14 @@
 <?php
 define('APP_RUNNING', true);
 session_start();
+
 $LOGIN = 'admin';
 $PASS = '123456';
+
+$galleries = array(
+    '1'=>'Букеты',
+    '2'=>'Композиции',
+);
 
 if ($_POST['login'] == $LOGIN && $_POST['password'] == $PASS) {
     $_SESSION['admin'] = true;
@@ -15,8 +21,10 @@ if (!$_SESSION['admin']) {
 
 function sendJSON($data)
 {
+    //Заголовки на всяк випадок шоб не кешувалось
     header('Cache-Control: no-cache, must-revalidate');
     header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+    //
     header('Content-type: application/json; charset=utf-8');
     echo json_encode($data);
     exit();
@@ -32,7 +40,15 @@ function saveUploadedImage($name)
 
 require './Data.class.php';
 
-$data = new Data('../data/images');
+if($galleries[$_GET['gallery']]){
+    $data = new Data('../data/images_'.$_GET['gallery']);
+} else {
+    $galeryIds = array_keys($galleries);
+    $firstGaleryId = $galeryIds[0];
+    header("Location: /manager/?gallery=".$firstGaleryId);
+    exit();
+}
+
 
 switch ($_GET['action']) {
     case 'list':

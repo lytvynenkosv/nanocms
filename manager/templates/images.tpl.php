@@ -10,6 +10,11 @@ defined('APP_RUNNING') or die('Restricted access');
 <body>
 <div class="container">
   <h1>Управление фотогаллереей</h1>
+  <ul class="nav nav-tabs">
+    <?php foreach ($galleries as $id=>$title){ //?>
+    <li role="presentation" <?php echo $id==$_GET['gallery'] ? 'class="active' : '' ; ?> "><a href="?gallery=<?php echo $id; ?>"><?php echo $title; ?></a></li>
+    <?php } ?>
+  </ul>
   <table id="images-list" class="table table-striped">
     <thead>
     <th>Фото</th>
@@ -42,8 +47,9 @@ defined('APP_RUNNING') or die('Restricted access');
     </form>
   </div>
 </div>
-
-
+<script type="text/javascript">
+  var GALLERY_ID = '<?php echo $_GET['gallery'] ?>';
+</script>
 <script type="text/javascript" src="/manager/assets/js/main.js"></script>
 </body>
 </html>
