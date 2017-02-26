@@ -8,5 +8,6 @@ defined('APP_RUNNING') or die('Restricted access');
 <link rel="stylesheet" href="/manager/assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="/manager/assets/css/main.css">
 <script type="text/javascript" src="/manager/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="/manager/assets/js/lodash.min.js"></script>
 <script type="text/javascript" src="/manager/assets/js/bootstrap.min.js"></script>
 <title>Панель управления</title>

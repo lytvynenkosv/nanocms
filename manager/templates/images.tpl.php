@@ -21,28 +21,29 @@ defined('APP_RUNNING') or die('Restricted access');
 
     </tbody>
   </table>
+  <div class="row">
+    <form id="upload-form" class="col-md-6 col-md-offset-3">
+      <h2>Загрузка изображения</h2>
+      <div class="row">
+        <div class="form-group col-sm-8">
+          <label for="newTitleInput">Название</label>
+          <input name="title" type="text" class="form-control" id="newTitleInput" placeholder="Название изображения" required>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="newPriceInput">Цена</label>
+          <input name="price" type="text" class="form-control" id="newPriceInput" placeholder="Цена" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputFile">Файл</label>
+        <input name="file" type="file" id="exampleInputFile" accept="image/jpeg" required>
+        <p class="help-block">Файл в формате JPEG</p>
+      <button type="submit" class="btn btn-default">Загрузить</button>
+    </form>
+  </div>
 </div>
-<form id="upload-form">
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputFile">File input</label>
-    <input type="file" id="exampleInputFile">
-    <p class="help-block">Example block-level help text here.</p>
-  </div>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox"> Check me out
-    </label>
-  </div>
-  <button type="submit" class="btn btn-default">Submit</button>
-</form>
+
+
 <script type="text/javascript" src="/manager/assets/js/main.js"></script>
 </body>
 </html>

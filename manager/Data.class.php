@@ -31,7 +31,7 @@ class Data
     }
 
     public function getAll(){
-        return $this->data;
+        return array_values($this->data);
     }
 
     public function delete($key){

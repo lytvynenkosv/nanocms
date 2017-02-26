@@ -44,6 +44,7 @@ switch ($_GET['action']) {
         $data->load();
         $id = $data->generateId();
         $image = array(
+            'id'=>$id,
             'title' => $_POST['title'],
             'price' => $_POST['price'],
             'image' => saveUploadedImage($id)
