@@ -1,5 +1,4 @@
 (function () {
-  var images = [];
   var $tableBody = $('#images-list tbody');
 
   function onNewImageSubmit(e) {
@@ -41,7 +40,6 @@
       .then(function (res) {
         if (res.success) {
           form.reset();
-          images.push(res.data);
           renderRow(res.data);
         } else {
           alert(res.message || "Ошибка загрузки, обратитесь к администратору!");
@@ -57,20 +55,63 @@
       .get('/manager/index.php?action=list')
       .then(function (res) {
         if(res.success){
-          images = res.data;
-          renderTable();
+          renderTable(res.data);
         } else {
           alert("Ошибка, обратитесь к администратору!");
         }
       })
       .fail(function () {
-
+        alert("Ошибка, обратитесь к администратору!");
       });
   }
 
-  function renderTable() {
+  function renderTable(images) {
     $tableBody.html(null);
     images.forEach(renderRow)
+  }
+
+  function saveImage(e) {
+    e.preventDefault();
+    var $row = $(e.currentTarget).closest('tr');
+    var data = {id: $row.data('id')}
+    $row.find('input').each(function () {
+      var input = this;
+      data[input.name] = input.value;
+    });
+    $.post('/manager/index.php?action=save',data)
+      .then(function (res) {
+        if(res.success){
+          $row.find('.save-image').attr('disabled','disabled');
+        } else {
+          alert("Ошибка, обратитесь к администратору!");
+        }
+      })
+      .fail(function () {
+        alert("Ошибка, обратитесь к администратору!");
+      });
+  }
+
+  function removeImage(e) {
+    e.preventDefault();
+    var $row = $(e.currentTarget).closest('tr');
+    $.post('/manager/index.php?action=delete',{id: $row.data('id')})
+      .then(function (res) {
+        if(res.success){
+          $row.fadeOut(300,function () {
+            $row.remove();
+          })
+        } else {
+          alert("Ошибка, обратитесь к администратору!");
+        }
+      })
+      .fail(function () {
+        alert("Ошибка, обратитесь к администратору!");
+      });
+  }
+
+  function imageChanged(e) {
+    var $row = $(e.currentTarget).closest('tr');
+    $row.find('.save-image').removeAttr('disabled');
   }
 
   function renderRow(item) {
@@ -80,7 +121,7 @@
       '<td><input name="title" type="text" class="form-control" value="'+item.title+'" required></td>' +
       '<td><input name="price" type="text" class="form-control" value="'+item.price+'" required></td>' +
       '<td>' +
-      '<button type="button" class="btn btn-success save-image" disabled="disabled"><i class="glyphicon glyphicon-ok"></i></button>' +
+      '<button type="button" class="btn btn-success save-image" disabled="disabled"><i class="glyphicon glyphicon-ok"></i></button> ' +
       '<button type="button" class="btn btn-danger remove-image"><i class="glyphicon glyphicon-remove"></i></button>' +
       '</td>' +
       '</tr>')
@@ -88,5 +129,9 @@
 
 
   $('#upload-form').on('submit', onNewImageSubmit);
+  $tableBody.on('click','button.save-image',saveImage);
+  $tableBody.on('click','button.remove-image',removeImage);
+  $tableBody.on('keyup','input',imageChanged);
+  $tableBody.on('change','input',imageChanged);
   loadTableData();
 })(jQuery);
