@@ -27,10 +27,10 @@
             // For handling the progress of the upload
             myXhr.upload.addEventListener('progress', function (e) {
               if (e.lengthComputable) {
-                $('progress').attr({
+                /*$('progress').attr({
                   value: e.loaded,
                   max: e.total,
-                });
+                });*/
               }
             }, false);
           }
@@ -73,7 +73,7 @@
   function saveImage(e) {
     e.preventDefault();
     var $row = $(e.currentTarget).closest('tr');
-    var data = {id: $row.data('id')}
+    var data = {id: $row.data('id')};
     $row.find('input').each(function () {
       var input = this;
       data[input.name] = input.value;
